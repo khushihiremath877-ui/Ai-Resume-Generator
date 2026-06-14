@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Generator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            width: 600px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 80px;
+            resize: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        #result {
+            margin-top: 20px;
+            background: #f8f8f8;
+            padding: 15px;
+            border-radius: 8px;
+            white-space: pre-wrap;
+            min-height: 150px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>AI Resume Generator</h1>
+
+    <input
+        type="text"
+        id="name"
+        placeholder="Enter Full Name"
+    >
+
+    <input
+        type="email"
+        id="email"
+        placeholder="Enter Email"
+    >
+
+    <input
+        type="text"
+        id="phone"
+        placeholder="Enter Phone Number"
+    >
+
+    <textarea
+        id="education"
+        placeholder="Enter Education"
+    ></textarea>
+
+    <textarea
+        id="skills"
+        placeholder="Enter Skills"
+    ></textarea>
+
+    <button onclick="generateResume()">
+        Generate Resume
+    </button>
+
+    <div id="result">
+Resume will appear here...
+    </div>
+
+</div>
+
+<script>
+
+async function generateResume() {
+
+    try {
+
+        const response = await fetch(
+            "/generate",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    name: document.getElementById("name").value,
+                    email: document.getElementById("email").value,
+                    phone: document.getElementById("phone").value,
+                    education: document.getElementById("education").value,
+                    skills: document.getElementById("skills").value
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        document.getElementById("result").innerText =
+            data.response;
+
+    } catch(error) {
+
+        document.getElementById("result").innerText =
+            "Error connecting to FastAPI backend.";
+
+        console.error(error);
+    }
+}
+
+</script>
+
+</body>
+</html>
