@@ -1,34 +1,4 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse
-from pydantic import BaseModel
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-class Resume(BaseModel):
-    name: str
-    email: str
-    phone: str
-    education: str
-    skills: str
-
-
-@app.get("/")
-def home():
-    return FileResponse("index.html")
-
-
-@app.post("/generate")
-def generate(data: Resume):
+def generate_resume(data):
 
     resume = f"""
 ====================================
@@ -61,6 +31,4 @@ continuous learning and innovation.
 ====================================
 """
 
-    return {
-        "response": resume
-    }
+    return resume
