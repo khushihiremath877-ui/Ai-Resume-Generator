@@ -154,6 +154,16 @@ http://127.0.0.1:8000
 * JSON request and response handling
 * Frontend-backend integration
 * Dynamic content generation
+## Architecture Improvements
+
+The project has been refactored into a modular FastAPI structure using separate layers for routes, schemas, and services.
+
+Benefits:
+
+* Improved code organization
+* Better maintainability
+* Easier scalability for future features
+* Clear separation of responsibilities
 
 ---
 
